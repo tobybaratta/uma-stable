@@ -1,5 +1,13 @@
 {
-  "cSpell.words": ["Baratta", "Dexie", "skillnames", "subcomponents", "umamusume", "umas"],
+  "cSpell.words": [
+    "Baratta",
+    "Debuff",
+    "Dexie",
+    "skillnames",
+    "subcomponents",
+    "umamusume",
+    "umas"
+  ],
   "cSpell.ignorePaths": [
     "package-lock.json",
     "node_modules",
