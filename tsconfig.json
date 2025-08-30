@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
@@ -9,7 +9,7 @@
     "noUncheckedIndexedAccess": true,
     "noErrorTruncation": true,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "react", "react-dom", "node"],
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
