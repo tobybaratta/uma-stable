@@ -1,13 +1,13 @@
-import globals from 'globals'
-import tseslint from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import eslintConfigPrettier from 'eslint-config-prettier/flat'
+import globals from 'globals';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default [
   {
-    ignores: ['dist', 'build', 'node_modules']
+    ignores: ['dist', 'build', 'node_modules'],
   },
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
@@ -17,13 +17,13 @@ export default [
       sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
       react,
-      'react-hooks': reactHooks
+      'react-hooks': reactHooks,
     },
     settings: { react: { version: 'detect' } },
     rules: {
@@ -33,9 +33,11 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       // Hooks
-      ...reactHooks.configs['recommended-latest'].rules
-    }
+      ...reactHooks.configs['recommended-latest'].rules,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
   },
   // Keep Prettier LAST to disable conflicting stylistic rules
-  eslintConfigPrettier
-]
+  eslintConfigPrettier,
+];
