@@ -15,6 +15,7 @@
   "100161": { "baseCost": 0, "groupId": 10016, "iconId": "20013", "order": 10 },
   "100171": { "baseCost": 0, "groupId": 10017, "iconId": "20013", "order": 10 },
   "100181": { "baseCost": 0, "groupId": 10018, "iconId": "20013", "order": 10 },
+  "100201": { "baseCost": 0, "groupId": 10020, "iconId": "20043", "order": 10 },
   "100231": { "baseCost": 0, "groupId": 10023, "iconId": "20013", "order": 10 },
   "100241": { "baseCost": 0, "groupId": 10024, "iconId": "20013", "order": 10 },
   "100261": { "baseCost": 0, "groupId": 10026, "iconId": "20013", "order": 10 },
@@ -49,6 +50,8 @@
   "10611": { "baseCost": 0, "groupId": 1061, "iconId": "20013", "order": 10 },
   "110031": { "baseCost": 0, "groupId": 11003, "iconId": "20013", "order": 10 },
   "110131": { "baseCost": 0, "groupId": 11013, "iconId": "20013", "order": 10 },
+  "110181": { "baseCost": 0, "groupId": 11018, "iconId": "20013", "order": 10 },
+  "110241": { "baseCost": 0, "groupId": 11024, "iconId": "20013", "order": 10 },
   "200011": { "baseCost": 110, "groupId": 20001, "iconId": "10011", "order": 1000 },
   "200012": { "baseCost": 90, "groupId": 20001, "iconId": "10011", "order": 1010 },
   "200013": { "baseCost": 50, "groupId": 20001, "iconId": "10014", "order": 1020 },
@@ -301,6 +304,7 @@
   "201242": { "baseCost": 130, "groupId": 20124, "iconId": "20011", "order": 30057 },
   "201251": { "baseCost": 140, "groupId": 20125, "iconId": "20011", "order": 30058 },
   "201252": { "baseCost": 130, "groupId": 20125, "iconId": "20011", "order": 30059 },
+  "201261": { "baseCost": 110, "groupId": 20126, "iconId": "20052", "order": 30060 },
   "201262": { "baseCost": 110, "groupId": 20126, "iconId": "20051", "order": 30061 },
   "201272": { "baseCost": 180, "groupId": 20127, "iconId": "20011", "order": 30063 },
   "201281": { "baseCost": 180, "groupId": 20128, "iconId": "20022", "order": 30064 },
@@ -388,6 +392,7 @@
   "900161": { "baseCost": 200, "groupId": 90016, "iconId": "20011", "order": 30 },
   "900171": { "baseCost": 200, "groupId": 90017, "iconId": "20011", "order": 30 },
   "900181": { "baseCost": 200, "groupId": 90018, "iconId": "20011", "order": 30 },
+  "900201": { "baseCost": 200, "groupId": 90020, "iconId": "20041", "order": 30 },
   "900231": { "baseCost": 200, "groupId": 90023, "iconId": "20011", "order": 30 },
   "900241": { "baseCost": 200, "groupId": 90024, "iconId": "20011", "order": 30 },
   "900261": { "baseCost": 200, "groupId": 90026, "iconId": "20011", "order": 30 },
@@ -405,5 +410,7 @@
   "900601": { "baseCost": 200, "groupId": 90060, "iconId": "20011", "order": 30 },
   "900611": { "baseCost": 200, "groupId": 90061, "iconId": "20011", "order": 30 },
   "910031": { "baseCost": 200, "groupId": 91003, "iconId": "20011", "order": 30 },
-  "910131": { "baseCost": 200, "groupId": 91013, "iconId": "20011", "order": 30 }
+  "910131": { "baseCost": 200, "groupId": 91013, "iconId": "20011", "order": 30 },
+  "910181": { "baseCost": 200, "groupId": 91018, "iconId": "20011", "order": 30 },
+  "910241": { "baseCost": 200, "groupId": 91024, "iconId": "20011", "order": 30 }
 }

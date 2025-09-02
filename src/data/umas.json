@@ -20,9 +20,16 @@
   "1015": { "name": ["", "T.M. Opera O"], "outfits": { "101501": "[O Sole Suo!]" } },
   "1016": { "name": ["", "Narita Brian"], "outfits": { "101601": "[Maverick]" } },
   "1017": { "name": ["", "Symboli Rudolf"], "outfits": { "101701": "[Emperor's Path]" } },
-  "1018": { "name": ["", "Air Groove"], "outfits": { "101801": "[Empress Road]" } },
+  "1018": {
+    "name": ["", "Air Groove"],
+    "outfits": { "101801": "[Empress Road]", "101802": "[Quercus Civilis]" }
+  },
+  "1020": { "name": ["", "Seiun Sky"], "outfits": { "102001": "[Reeling in the Big One]" } },
   "1023": { "name": ["", "Biwa Hayahide"], "outfits": { "102301": "[pf. Winning Equation...]" } },
-  "1024": { "name": ["", "Mayano Top Gun"], "outfits": { "102401": "[Scramble☆Zone]" } },
+  "1024": {
+    "name": ["", "Mayano Top Gun"],
+    "outfits": { "102401": "[Scramble☆Zone]", "102402": "[Sunlight Bouquet]" }
+  },
   "1026": { "name": ["", "Mihono Bourbon"], "outfits": { "102601": "[MB-19890425]" } },
   "1027": { "name": ["", "Mejiro Ryan"], "outfits": { "102701": "[Down the Line]" } },
   "1030": { "name": ["", "Rice Shower"], "outfits": { "103001": "[Rosy Dreams]" } },
