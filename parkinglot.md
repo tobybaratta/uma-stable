@@ -39,3 +39,9 @@ for (const [order, count] of Object.entries(orderCount)) {
 
 console.log(duplicates);
 ```
+
+## Note on data structure
+
+Unlike the Umalator, I want the aptitudes and other details that the Umalator doesn't keep or care about. It's very specific individual Legacy Uma, versus the Umalator itself.
+
+Need to consider how this would work and the specific language of Veteran Umamusume versus an Umamusume that's just a instantiation of an Uma.
