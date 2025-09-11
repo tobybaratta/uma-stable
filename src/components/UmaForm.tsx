@@ -21,6 +21,7 @@ import {
   Grade,
 } from '../types/aptitudes';
 import { VeteranAptitudesEditor } from './AffinitiesSelector';
+import { cap } from '../utils/string';
 
 type Props = {
   editing?: Uma | null;
@@ -104,7 +105,7 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
   return (
     <Paper component="form" onSubmit={onSubmit} sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>
-        Record
+        Add a new Uma
       </Typography>
 
       <Grid container spacing={2}>
@@ -126,7 +127,7 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
             <TextField
               type="number"
               fullWidth
-              label={k.toUpperCase?.() ?? k.slice(1)}
+              label={cap(k)}
               value={stats[k] ?? ''}
               onChange={(e) => updateStat(k, e.target.value)}
             />
@@ -172,9 +173,6 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
           </Grid>
         ))}
         <Grid columnSpacing={{ xs: 12 }}>
-          <Divider textAlign="left">Legacy</Divider>
-        </Grid>
-        <Grid columnSpacing={{ xs: 12 }}>
           <TextField
             label="Notes"
             fullWidth
@@ -191,7 +189,7 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
             </Button>
             {editing && (
               <Typography variant="body2" color="text.secondary" sx={{ alignSelf: 'center' }}>
-                Editing existing record
+                Editing existing record...
               </Typography>
             )}
           </Stack>

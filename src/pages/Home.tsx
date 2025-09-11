@@ -39,7 +39,7 @@ export default function Home() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Uma Manual PWA
+            The Uma Stable
           </Typography>
           <Tabs
             value={tab}
@@ -53,6 +53,7 @@ export default function Home() {
         </Toolbar>
       </AppBar>
 
+      {/* Show the "New Uma" view or the "Uma List" depending on selected tab." */}
       <Container maxWidth="md" sx={{ py: 3 }}>
         <Box hidden={tab !== 0}>
           <UmaForm

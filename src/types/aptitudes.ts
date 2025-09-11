@@ -1,7 +1,6 @@
-// aptitudes.ts
 import { z } from 'zod';
 
-/** Single source of truth for UI + types */
+/** Single source of truth for types */
 export const SurfaceTypes = ['Turf', 'Dirt'] as const;
 export const DistanceTypes = ['Short', 'Mile', 'Medium', 'Long'] as const;
 export const RunnerTypes = ['Front', 'Pace', 'Late', 'End'] as const;
@@ -18,14 +17,17 @@ export type VeteranAptitudes = {
   Style: Record<Runner, Grade>;
 };
 
+// Default values for Aptitudes when creating a new Uma. Lazily done but whatever.
 export const DefaultVeteranAptitudes: VeteranAptitudes = {
   Distance: { Short: 'G+', Mile: 'G+', Medium: 'G+', Long: 'G+' },
   Track: { Turf: 'G+', Dirt: 'G+' },
   Style: { Front: 'G+', Pace: 'G+', Late: 'G+', End: 'G+' },
 };
 
-// Optional runtime schema (nice for form submit validation)
+// Grade values
 export const GradeEnum = z.enum(GradeTypes);
+
+// Schema for Zod and type validations
 export const VeteranAptitudesSchema = z
   .object({
     Distance: z

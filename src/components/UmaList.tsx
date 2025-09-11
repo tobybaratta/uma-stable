@@ -40,6 +40,7 @@ export default function UmaList({ onEdit }: Props) {
     const all = await db.umas.toArray();
     downloadJSON('uma_all.json', all);
   }
+
   async function clearAll() {
     if (!confirm('Delete all stored Uma records?')) return;
     await db.umas.clear();
@@ -68,8 +69,6 @@ export default function UmaList({ onEdit }: Props) {
         <TableHead>
           <TableRow>
             <TableCell>Trainee</TableCell>
-            <TableCell>Scenario</TableCell>
-            <TableCell>Updated</TableCell>
             <TableCell>Skills</TableCell>
             <TableCell align="right">Actions</TableCell>
           </TableRow>
@@ -78,7 +77,6 @@ export default function UmaList({ onEdit }: Props) {
           {filtered.map((u) => (
             <TableRow key={u.id} hover>
               <TableCell>{u.trainee}</TableCell>
-              <TableCell>{u.scenario ?? '-'}</TableCell>
               <TableCell>{new Date(u.updatedAt).toLocaleString()}</TableCell>
               <TableCell>{u.skills.length}</TableCell>
               <TableCell align="right">
@@ -104,10 +102,11 @@ export default function UmaList({ onEdit }: Props) {
               </TableCell>
             </TableRow>
           ))}
+
           {filtered.length === 0 && (
             <TableRow>
               <TableCell colSpan={5} sx={{ color: 'text.secondary' }}>
-                No records yet
+                No Umas found...
               </TableCell>
             </TableRow>
           )}
