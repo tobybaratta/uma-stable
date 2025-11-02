@@ -5,12 +5,16 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
-export default [
+export default defineConfig([
+  globalIgnores(['dist']),
   {
-    ignores: ['dist', 'build', 'node_modules'],
-  },
-  {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+    ],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',
@@ -40,4 +44,4 @@ export default [
   },
   // Keep Prettier LAST to disable conflicting stylistic rules
   eslintConfigPrettier,
-];
+]);

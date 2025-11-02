@@ -1,0 +1,80 @@
+# Currently disabled, do not commit
+name: sync-data-pr
+
+on:
+  schedule:
+    - cron: '0 5 * * 1' # Mondays 05:00 UTC
+  workflow_dispatch:
+    inputs:
+      uma_tools_ref:
+        description: 'Ref (branch/tag/SHA) for alpha123/uma-tools'
+        required: false
+        default: 'master'
+      uma_skill_tools_ref:
+        description: 'Ref (branch/tag/SHA) for alpha123/uma-skill-tools'
+        required: false
+        default: 'master'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-data
+  cancel-in-progress: false
+
+env:
+  # Repo-level variables set; same as .env
+  UMA_TOOLS_REF: ${{ inputs.uma_tools_ref || vars.UMA_TOOLS_REF || 'master' }}
+  UMA_SKILL_TOOLS_REF: ${{ inputs.uma_skill_tools_ref || vars.UMA_SKILL_TOOLS_REF || 'master' }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      - name: Run sync script
+        run: npm run sync:data
+
+      # Create a PR only if there are changes. If no changes, then stop.
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/sync-uma-data
+          title: 'chore(data): sync upstream UMA & skill JSONs'
+          commit-message: 'chore(data): sync upstream JSONs'
+          body: |
+            Automated data sync.
+
+            - uma-tools ref: `${{ env.UMA_TOOLS_REF }}`
+            - uma-skill-tools ref: `${{ env.UMA_SKILL_TOOLS_REF }}`
+
+            This PR is only opened when files change.
+          signoff: true
+          delete-branch: true
+          add-paths: |
+            src/data/upstream/**
+            public/uma-icons/**
+
+      - name: PR link (if created)
+        if: steps.cpr.outputs.pull-request-number != ''
+        run: |
+          echo "PR #${{ steps.cpr.outputs.pull-request-number }} opened at:"
+          echo "${{ steps.cpr.outputs.pull-request-url }}"
