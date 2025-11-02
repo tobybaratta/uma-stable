@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { Stats, UmaSchema, type Uma } from '../schema';
+import { UmaSchema, type Uma } from '../schema';
 import { db } from '../db';
 import {
   Paper,
@@ -13,14 +13,8 @@ import {
   Stack,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {
-  VeteranAptitudes,
-  DefaultVeteranAptitudes,
-  DistanceTypes,
-  GradeTypes,
-  Grade,
-} from '../types/aptitudes';
-import { VeteranAptitudesEditor } from './AffinitiesSelector';
+import { UmaStats, TraineeAptitudes, DefaultTraineeAptitudes } from '../types';
+import { AffinitiesSelector } from './AffinitiesSelector';
 import { cap } from '../utils/string';
 
 type Props = {
@@ -29,19 +23,20 @@ type Props = {
   onError?(msg: string): void;
 };
 
-const emptyStats: Stats = {
+const emptyStats: UmaStats = {
   speed: null,
   stamina: null,
   power: null,
   guts: null,
   wisdom: null,
 };
-const emptyAff: VeteranAptitudes = DefaultVeteranAptitudes;
+
+const emptyAff: TraineeAptitudes = DefaultTraineeAptitudes;
 
 export default function UmaForm({ editing, onSaved, onError }: Props) {
   const [trainee, setTrainee] = useState(editing?.trainee ?? '');
-  const [stats, setStats] = useState<Stats>(editing?.stats ?? emptyStats);
-  const [affinities, setAff] = useState<VeteranAptitudes>(editing?.affinities ?? emptyAff);
+  const [stats, setStats] = useState<UmaStats>(editing?.stats ?? emptyStats);
+  const [affinities, setAff] = useState<TraineeAptitudes>(editing?.affinities ?? emptyAff);
   const [skills, setSkills] = useState(
     editing?.skills ?? ([] as { name: string; rarity?: 'white' | 'gold' }[]),
   );
@@ -57,7 +52,7 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
   }, [editing]);
 
   function updateStat(k: keyof typeof stats, v: string) {
-    const n = v === '' ? null : Math.max(0, Math.min(1600, Math.floor(Number(v)) || 0));
+    const n = v === '' ? null : Math.max(0, Math.min(1200, Math.floor(Number(v)) || 0));
     setStats((s) => ({ ...s, [k]: n }));
   }
 
@@ -136,7 +131,7 @@ export default function UmaForm({ editing, onSaved, onError }: Props) {
         <Grid columnSpacing={{ xs: 12 }}>
           <Divider textAlign="left">Affinities</Divider>
         </Grid>
-        <VeteranAptitudesEditor />
+        <AffinitiesSelector value={affinities} onChange={setAff} />
         <Grid columnSpacing={{ xs: 12 }}>
           <Divider textAlign="left">Skills</Divider>
         </Grid>

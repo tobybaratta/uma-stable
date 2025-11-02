@@ -4,7 +4,7 @@ import { z } from 'zod';
 export const SurfaceTypes = ['Turf', 'Dirt'] as const;
 export const DistanceTypes = ['Short', 'Mile', 'Medium', 'Long'] as const;
 export const RunnerTypes = ['Front', 'Pace', 'Late', 'End'] as const;
-export const GradeTypes = ['G+', 'F', 'D', 'C', 'B', 'A', 'S'] as const;
+export const GradeTypes = ['S', 'A', 'B', 'C', 'D', 'F', 'G+'] as const;
 
 export type Surface = (typeof SurfaceTypes)[number];
 export type Distance = (typeof DistanceTypes)[number];
@@ -51,7 +51,7 @@ export const TraineeAptitudesSchema = z
   .strict();
 
 export const DefaultTraineeAptitudes: TraineeAptitudes = {
-  Distance: { Short: 'G+', Mile: 'G+', Medium: 'G+', Long: 'G+' },
-  Track: { Turf: 'G+', Dirt: 'G+' },
-  Style: { Front: 'G+', Pace: 'G+', Late: 'G+', End: 'G+' },
+  Distance: { Short: 'A', Mile: 'A', Medium: 'A', Long: 'A' },
+  Track: { Turf: 'A', Dirt: 'A' },
+  Style: { Front: 'A', Pace: 'A', Late: 'A', End: 'A' },
 };

@@ -10,22 +10,51 @@ import {
   type Distance,
   type Surface,
   type Runner,
-  type VeteranAptitudes,
-  DefaultVeteranAptitudes,
-} from '../types/aptitudes';
-import { cap } from '../utils/string';
+  type TraineeAptitudes,
+} from '../types';
 
-export function VeteranAptitudesEditor() {
-  const [aff, setAff] = React.useState<VeteranAptitudes>(DefaultVeteranAptitudes);
+type Props = {
+  value: TraineeAptitudes;
+  onChange: (v: TraineeAptitudes) => void;
+};
 
+function GradeSelect<T extends string>(props: {
+  label: string;
+  value: T;
+  onChange: (v: T) => void;
+  size?: 'small' | 'medium';
+}) {
+  const { label, value, onChange, size = 'small' } = props;
+  return (
+    <TextField
+      select
+      label={label}
+      value={value}
+      onChange={(e) => onChange(e.target.value as T)}
+      size={size}
+      sx={{ minWidth: 90 }}
+    >
+      {GradeTypes.map((g) => (
+        <MenuItem key={g} value={g}>
+          {g}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+}
+
+// Controlled affinities editor — receives the current affinities and notifies
+// the parent when a value changes. This simplifies state management and
+// avoids duplication with the form's state.
+export function AffinitiesSelector({ value, onChange }: Props) {
   const setDistance = (k: Distance, g: Grade) =>
-    setAff((a) => ({ ...a, Distance: { ...a.Distance, [k]: g } }));
+    onChange({ ...value, Distance: { ...value.Distance, [k]: g } });
 
   const setTrack = (k: Surface, g: Grade) =>
-    setAff((a) => ({ ...a, Track: { ...a.Track, [k]: g } }));
+    onChange({ ...value, Track: { ...value.Track, [k]: g } });
 
   const setStyle = (k: Runner, g: Grade) =>
-    setAff((a) => ({ ...a, Style: { ...a.Style, [k]: g } }));
+    onChange({ ...value, Style: { ...value.Style, [k]: g } });
 
   return (
     <Grid container spacing={2}>
@@ -34,20 +63,7 @@ export function VeteranAptitudesEditor() {
         <Grid sx={{ minWidth: 80, fontWeight: 'bold' }}>Distance:</Grid>
         {DistanceTypes.map((k) => (
           <Grid key={`Distance-${k}`}>
-            <TextField
-              select
-              label={cap(k)}
-              value={aff.Distance[k]}
-              onChange={(e) => setDistance(k, e.target.value as Grade)}
-              size="small"
-              sx={{ minWidth: 90 }}
-            >
-              {GradeTypes.map((g) => (
-                <MenuItem key={g} value={g}>
-                  {g}
-                </MenuItem>
-              ))}
-            </TextField>
+            <GradeSelect label={k} value={value.Distance[k]} onChange={(v) => setDistance(k, v)} />
           </Grid>
         ))}
       </Grid>
@@ -57,20 +73,7 @@ export function VeteranAptitudesEditor() {
         <Grid sx={{ minWidth: 80, fontWeight: 'bold' }}>Track:</Grid>
         {SurfaceTypes.map((k) => (
           <Grid key={`Track-${k}`}>
-            <TextField
-              select
-              label={k}
-              value={aff.Track[k]}
-              onChange={(e) => setTrack(k, e.target.value as Grade)}
-              size="small"
-              sx={{ minWidth: 90 }}
-            >
-              {GradeTypes.map((g) => (
-                <MenuItem key={g} value={g}>
-                  {g}
-                </MenuItem>
-              ))}
-            </TextField>
+            <GradeSelect label={k} value={value.Track[k]} onChange={(v) => setTrack(k, v)} />
           </Grid>
         ))}
       </Grid>
@@ -80,20 +83,7 @@ export function VeteranAptitudesEditor() {
         <Grid sx={{ minWidth: 80, fontWeight: 'bold' }}>Style:</Grid>
         {RunnerTypes.map((k) => (
           <Grid key={`Style-${k}`}>
-            <TextField
-              select
-              label={k}
-              value={aff.Style[k]}
-              onChange={(e) => setStyle(k, e.target.value as Grade)}
-              size="small"
-              sx={{ minWidth: 90 }}
-            >
-              {GradeTypes.map((g) => (
-                <MenuItem key={g} value={g}>
-                  {g}
-                </MenuItem>
-              ))}
-            </TextField>
+            <GradeSelect label={k} value={value.Style[k]} onChange={(v) => setStyle(k, v)} />
           </Grid>
         ))}
       </Grid>
