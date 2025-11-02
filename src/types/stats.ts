@@ -1,8 +1,6 @@
 import { z } from 'zod';
 
-export const StatTypes = ['Speed', 'Stamina', 'Power', 'Guts', 'Wisdom'] as const;
-
-const StatResultType = z.number().int().nonnegative().max(1600).nullable();
+const StatResultType = z.int().gte(400).lte(1200).nullable();
 
 export const UmaStatsSchema = z.object({
   speed: StatResultType,
@@ -11,3 +9,5 @@ export const UmaStatsSchema = z.object({
   guts: StatResultType,
   wisdom: StatResultType,
 });
+
+export type UmaStats = z.infer<typeof UmaStatsSchema>;

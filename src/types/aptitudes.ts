@@ -1,6 +1,6 @@
+/** Single source of truth for types */
 import { z } from 'zod';
 
-/** Single source of truth for types */
 export const SurfaceTypes = ['Turf', 'Dirt'] as const;
 export const DistanceTypes = ['Short', 'Mile', 'Medium', 'Long'] as const;
 export const RunnerTypes = ['Front', 'Pace', 'Late', 'End'] as const;
@@ -11,24 +11,19 @@ export type Distance = (typeof DistanceTypes)[number];
 export type Runner = (typeof RunnerTypes)[number];
 export type Grade = (typeof GradeTypes)[number];
 
-export type VeteranAptitudes = {
-  Distance: Record<Distance, Grade>;
-  Track: Record<Surface, Grade>;
-  Style: Record<Runner, Grade>;
+/**
+ * Distance, Track, and Style models
+ **/
+export type TraineeAptitudes = {
+  Distance: { [K in Distance]: Grade };
+  Track: { [K in Surface]: Grade };
+  Style: { [K in Runner]: Grade };
 };
 
-// Default values for Aptitudes when creating a new Uma. Lazily done but whatever.
-export const DefaultVeteranAptitudes: VeteranAptitudes = {
-  Distance: { Short: 'G+', Mile: 'G+', Medium: 'G+', Long: 'G+' },
-  Track: { Turf: 'G+', Dirt: 'G+' },
-  Style: { Front: 'G+', Pace: 'G+', Late: 'G+', End: 'G+' },
-};
-
-// Grade values
 export const GradeEnum = z.enum(GradeTypes);
 
-// Schema for Zod and type validations
-export const VeteranAptitudesSchema = z
+// Zod schema for validation
+export const TraineeAptitudesSchema = z
   .object({
     Distance: z
       .object({
@@ -54,3 +49,9 @@ export const VeteranAptitudesSchema = z
       .strict(),
   })
   .strict();
+
+export const DefaultTraineeAptitudes: TraineeAptitudes = {
+  Distance: { Short: 'G+', Mile: 'G+', Medium: 'G+', Long: 'G+' },
+  Track: { Turf: 'G+', Dirt: 'G+' },
+  Style: { Front: 'G+', Pace: 'G+', Late: 'G+', End: 'G+' },
+};
