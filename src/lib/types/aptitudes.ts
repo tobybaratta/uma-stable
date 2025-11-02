@@ -1,54 +1,27 @@
-/** Single source of truth for types */
-import { z } from 'zod';
-
-export const SurfaceTypes = ['Turf', 'Dirt'] as const;
-export const DistanceTypes = ['Short', 'Mile', 'Medium', 'Long'] as const;
-export const RunnerTypes = ['Front', 'Pace', 'Late', 'End'] as const;
-export const GradeTypes = ['S', 'A', 'B', 'C', 'D', 'F', 'G+'] as const;
-
-export type Surface = (typeof SurfaceTypes)[number];
-export type Distance = (typeof DistanceTypes)[number];
-export type Runner = (typeof RunnerTypes)[number];
-export type Grade = (typeof GradeTypes)[number];
-
 /**
- * Distance, Track, and Style models
- **/
-export type TraineeAptitudes = {
-  Distance: { [K in Distance]: Grade };
-  Track: { [K in Surface]: Grade };
-  Style: { [K in Runner]: Grade };
+ * Race aptitudes (graded) for a legacy.
+ */
+export type Grade = 'G+' | 'F' | 'D' | 'C' | 'B' | 'A' | 'S';
+export const GRADE_ORDER: Grade[] = ['G+', 'F', 'D', 'C', 'B', 'A', 'S'];
+export const gradeRank: Record<Grade, number> = {
+  'G+': 0,
+  F: 1,
+  D: 2,
+  C: 3,
+  B: 4,
+  A: 5,
+  S: 6,
 };
 
-export const GradeEnum = z.enum(GradeTypes);
+export type Distance = 'Short' | 'Mile' | 'Medium' | 'Long';
+export type Surface = 'Turf' | 'Dirt';
+export type Runner = 'Front' | 'Pace' | 'Late' | 'End';
 
-// Zod schema for validation
-export const TraineeAptitudesSchema = z
-  .object({
-    Distance: z
-      .object({
-        Short: GradeEnum,
-        Mile: GradeEnum,
-        Medium: GradeEnum,
-        Long: GradeEnum,
-      })
-      .strict(),
-    Track: z
-      .object({
-        Turf: GradeEnum,
-        Dirt: GradeEnum,
-      })
-      .strict(),
-    Style: z
-      .object({
-        Front: GradeEnum,
-        Pace: GradeEnum,
-        Late: GradeEnum,
-        End: GradeEnum,
-      })
-      .strict(),
-  })
-  .strict();
+export type TraineeAptitudes = {
+  Distance: Record<Distance, Grade>;
+  Track: Record<Surface, Grade>;
+  Style: Record<Runner, Grade>;
+};
 
 export const DefaultTraineeAptitudes: TraineeAptitudes = {
   Distance: { Short: 'A', Mile: 'A', Medium: 'A', Long: 'A' },

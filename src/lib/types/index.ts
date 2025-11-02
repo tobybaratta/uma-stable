@@ -1,4 +1,4 @@
 export * from './aptitudes';
-export * from './stats';
-export * from './skills';
+export * from './skillCatalog';
 export * from './sparks';
+export * from './umaVeteran';
