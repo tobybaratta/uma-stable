@@ -1,17 +1,18 @@
 {
   "cSpell.words": [
     "Baratta",
+    "Chibi",
     "Debuff",
     "Dexie",
+    "Maruzensky",
     "Musume",
+    "Seiun",
     "skilllnames",
     "skillnames",
     "subcomponents",
     "umalator",
     "umamusume",
-    "umas",
-    "Seiun",
-    "Chibi"
+    "umas"
   ],
   "cSpell.ignorePaths": [
     "package-lock.json",
@@ -21,6 +22,6 @@
     ".git/{index,*refs,*HEAD}",
     ".vscode",
     ".vscode-insiders",
-    "src/data"
+    "public"
   ]
 }

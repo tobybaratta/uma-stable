@@ -10,7 +10,7 @@ export default function ComboAdd({
 }: {
   placeholder: string;
   options: string[];
-  onAdd: (value: string) => void;
+  onAdd: (value: number) => void;
 }) {
   const [value, setValue] = useState('');
   return (
@@ -30,7 +30,11 @@ export default function ComboAdd({
           ))}
         </datalist>
       </div>
-      <Button onClick={() => (onAdd(value.trim()), setValue(''))} type="button" className="gap-2">
+      <Button
+        onClick={() => (onAdd(Number(value.trim())), setValue(''))}
+        type="button"
+        className="gap-2"
+      >
         Add
       </Button>
     </div>

@@ -7,19 +7,25 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import type { Entry } from '@/lib/types';
+
 import { useState } from 'react';
+import { skillName } from '@/lib/catalog';
+
+import type { SkillCatalog } from '@/lib/types.ui';
+import type { Veteran } from '@/lib/types.db';
 
 export default function ListPanel({
   entries,
   onEdit,
   onDelete,
   setEntries,
+  SKILLS,
 }: {
-  entries: Entry[];
-  onEdit: (e: Entry) => void;
+  entries: Veteran[];
+  onEdit: (e: Veteran) => void;
   onDelete: (id: string) => void;
-  setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
+  setEntries: React.Dispatch<React.SetStateAction<Veteran[]>>;
+  SKILLS: SkillCatalog;
 }) {
   const [dense, setDense] = useState(false);
   const toggleFav = (id: string) =>
@@ -31,12 +37,12 @@ export default function ListPanel({
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-xl">Your Trainees</CardTitle>
-            <CardDescription>Quick list of saved trainees with skills & sparks.</CardDescription>
+            <CardDescription>These are loaded in from local memory and will not be saved on refresh. That's TBD.</CardDescription>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Label htmlFor="dense" className="text-sm">
-                Compact
+                Compact View
               </Label>
               <Switch id="dense" checked={dense} onCheckedChange={(v) => setDense(!!v)} />
             </div>
@@ -58,7 +64,10 @@ export default function ListPanel({
             >
               <div className="flex items-start justify-between">
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-lg leading-tight truncate">{e.trainee}</h3>
+                  {/* displayName now comes from e.uma.displayName */}
+                  <h3 className="font-semibold text-lg leading-tight truncate">
+                    {e.uma.displayName}
+                  </h3>
                   <p className="text-xs text-muted-foreground">
                     Added {new Date(e.createdAt).toLocaleDateString()}
                   </p>
@@ -113,9 +122,9 @@ export default function ListPanel({
               ) : null}
 
               <div className="mt-3 flex flex-wrap gap-2">
-                {e.skills.slice(0, 5).map((s, i) => (
+                {e.skills.slice(0, 5).map((id, i) => (
                   <Badge key={i} variant="secondary" className="rounded-xl">
-                    {s}
+                    {skillName(id, SKILLS)}
                   </Badge>
                 ))}
                 {e.skills.length > 5 && (
@@ -129,12 +138,13 @@ export default function ListPanel({
                 {e.sparks.length ? (
                   <span className="text-xs font-medium text-muted-foreground">Sparks:</span>
                 ) : null}
-                {e.sparks.map((s, i) => (
+
+                {e.sparks.map((id, i) => (
                   <Badge
                     key={i}
-                    className="rounded-xl bg-gradient-to-r from-amber-200 to-pink-200 text-foreground border-0"
+                    className="rounded-xl bg-gradient-to-r from-amber-200 to-pink-200 border-0"
                   >
-                    {s}
+                    {skillName(id, SKILLS)}
                   </Badge>
                 ))}
               </div>
