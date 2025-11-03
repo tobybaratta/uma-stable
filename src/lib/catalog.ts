@@ -5,10 +5,22 @@
 import type { SkillCatalog, SkillCatalogEntry, UmaBase, UmaVariant } from './types.ui';
 
 // --- JSON files from Umalator -------------------------------
-const URL_SKILL_NAMES = '/skill_names.json';
-const URL_SKILL_META = '/skills_meta.json';
-const URL_UMAS = '/umas.json';
 
+const BASE = (import.meta as any).env?.BASE_URL ?? '/';
+
+const URL_SKILL_NAMES = `${BASE}skill_names.json`;
+const URL_SKILL_META = `${BASE}skills_meta.json`;
+const URL_UMAS = `${BASE}umas.json`;
+
+export function getSkillIconUrl(id: number, SKILLS: SkillCatalog): string {
+  const entry = SKILLS[id];
+  const iconKey = entry?.iconId ?? id;
+  return `${BASE}icons/skills/${iconKey}.png`;
+}
+
+export function getUmaIcon(umaBaseId: string): string {
+  return `${BASE}icons/umas/${umaBaseId}.png`;
+}
 // --- JSON shapes -------------------------------------------------------------
 // skill_names.json: { "10001": ["Skill Name"], ... }
 type SkillNamesJson = Record<string, [string] | string[]>;
@@ -143,18 +155,6 @@ export async function loadCatalogs(): Promise<{
 export function getSkillNameById(id: number, SKILLS: SkillCatalog): string {
   const entry = SKILLS[id];
   return entry?.name ?? `Skill #${id}`;
-}
-
-/** Public path to a skill’s icon. Uses iconId when available; falls back to id. */
-export function getSkillIconUrl(id: number, SKILLS: SkillCatalog): string {
-  const entry = SKILLS[id];
-  const iconKey = entry?.iconId ?? id;
-  return `/icons/skills/${iconKey}.png`;
-}
-
-/** Public path to a base Uma’s icon (not outfit-specific). */
-export function getUmaIcon(baseUmaId: string): string {
-  return `/icons/umas/${baseUmaId}.png`;
 }
 
 /** Find a specific Uma variant (by outfitId) from the prepared list. */
