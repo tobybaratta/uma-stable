@@ -128,12 +128,12 @@ export default function ListPanel({
               ) : null}
 
               <div className="mt-3 flex flex-wrap gap-2">
-                {e.skills.slice(0, 5).map((id, i) => (
+                {e.skills?.slice(0, 5).map((id, i) => (
                   <Badge key={i} className={badgeSkill}>
                     {getSkillNameById(id, SKILLS)}
                   </Badge>
                 ))}
-                {e.skills.length > 5 && (
+                {e.skills?.length > 5 && (
                   <Badge variant="outline" className={badgeSkill}>
                     +{e.skills.length - 5} more
                   </Badge>
@@ -141,11 +141,11 @@ export default function ListPanel({
               </div>
 
               <div className="mt-3 flex flex-wrap gap-2">
-                {e.sparks.length ? (
+                {e.sparks?.length ? (
                   <span className="text-xs font-medium text-muted-foreground">Sparks:</span>
                 ) : null}
 
-                {e.sparks.map((id, i) => (
+                {e.sparks?.map((id, i) => (
                   <Badge key={i} className={badgeSpark}>
                     {getSkillNameById(id, SKILLS)}
                   </Badge>
