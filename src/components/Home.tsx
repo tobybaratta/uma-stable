@@ -9,7 +9,6 @@ import { buildVeteran } from '@/lib/adapters.db';
 import type { Veteran } from '@/lib/types.db';
 import type { SkillCatalog, UmaVariant, UmaBase } from '@/lib/types.ui';
 
-// Small, stable uid helper (you can replace with crypto.randomUUID if preferred)
 const uid = () => Math.random().toString(36).slice(2, 10);
 
 export default function App() {
@@ -21,7 +20,18 @@ export default function App() {
   const [UMA_VARIANTS, setUMA_VARIANTS] = useState<UmaVariant[]>([]);
 
   // Data
-  const [entries, setEntries] = useState<Veteran[]>([]);
+  // Try to load previously saved veterans from sessionStorage
+  const [entries, setEntries] = useState<Veteran[]>(() => {
+    try {
+      const stored = sessionStorage.getItem('uma-stable-veterans');
+      console.log(stored);
+      return stored ? (JSON.parse(stored) as Veteran[]) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  // Search functions
   const [query, setQuery] = useState('');
 
   // Sheet state
@@ -58,7 +68,11 @@ export default function App() {
         });
       }
 
-      setEntries(seed);
+      setEntries((prev) => {
+        if (prev.length > 0) return prev;
+        return seed ? [seed as any] : [];
+      });
+
       setReady(true);
     })();
     return () => {
@@ -124,6 +138,16 @@ export default function App() {
     setOpen(true);
   };
 
+  // Persist veterans to sessionStorage on any change
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('uma-stable-veterans', JSON.stringify(entries));
+    } catch {
+      // Ignore quota / private mode errors
+    }
+  }, [entries]);
+
+  // If the data isn't loaded in yet, just show loading. Really shouldn't ever happen.
   if (!ready) return <div className="p-6">Loading…</div>;
 
   return (

@@ -21,7 +21,7 @@ export default function ThemeToggle() {
   return (
     <Button variant="secondary" onClick={() => setDark((v) => !v)} className="rounded-full gap-2">
       {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-      {dark ? 'Uma Pastel' : 'Night Race'}
+      {dark ? 'Light Pastel' : 'Night Owl'}
     </Button>
   );
 }

@@ -4,8 +4,7 @@
 
 import type { SkillCatalog, SkillCatalogEntry, UmaBase, UmaVariant } from './types.ui';
 
-// --- Where the JSON files live (public/ root) -------------------------------
-// If you move these files, just update the paths below.
+// --- JSON files from Umalator -------------------------------
 const URL_SKILL_NAMES = '/skill_names.json';
 const URL_SKILL_META = '/skills_meta.json';
 const URL_UMAS = '/umas.json';
@@ -55,23 +54,26 @@ function buildSkillCatalog(names: SkillNamesJson, meta: SkillsMetaJson): SkillCa
   return catalog;
 }
 
-/** Convert your raw umas.json (object keyed by base id) into a friendly array. */
+/** Converts raw umas.json (object keyed by base id) into functional array. */
 function normalizeUmas(raw: RawUmasJson): UmaBase[] {
   const list: UmaBase[] = [];
 
   for (const baseId of Object.keys(raw)) {
-    const item = raw[baseId];
-    // item.name[0] is always "", item.name[1] is the readable base name
-    const name = item?.name?.[1] ?? `Uma #${baseId}`;
-    const outfits = item?.outfits ?? {};
+    const item: RawUma = raw[baseId];
+    const name: string = item?.name?.[1] ?? `Uma #${baseId}`;
+    const outfits: Record<string, string> = item?.outfits ?? {};
+
     list.push({ id: baseId, name, outfits });
   }
 
-  // Keep a stable order (numeric by id)
+  // Just ordering by their ID
   return list.sort((a, b) => Number(a.id) - Number(b.id));
 }
 
-/** Flatten each outfit into a separate "variant" row with a finished displayName. */
+/**
+ * Each "Outfit" is a Variant of that Uma, almost the same Uma but with different top skills and growth rates.
+ * This flattens all Uma bases + outfits into a single list of all Uma Variants at one-level for easier selection.
+ */
 function buildUmaVariants(bases: UmaBase[]): UmaVariant[] {
   const variants: UmaVariant[] = [];
 
@@ -91,7 +93,7 @@ function buildUmaVariants(bases: UmaBase[]): UmaVariant[] {
   return variants.sort((a, b) => Number(a.id) - Number(b.id));
 }
 
-// --- Public API --------------------------------------------------------------
+// --- Helper Utilities --------------------------------------------------------------
 
 /**
  * Load and prepare all catalogs.
@@ -138,20 +140,20 @@ export async function loadCatalogs(): Promise<{
 }
 
 /** Friendly name for a skill id; falls back to "Skill #123". */
-export function skillName(id: number, SKILLS: SkillCatalog): string {
+export function getSkillNameById(id: number, SKILLS: SkillCatalog): string {
   const entry = SKILLS[id];
   return entry?.name ?? `Skill #${id}`;
 }
 
 /** Public path to a skill’s icon. Uses iconId when available; falls back to id. */
-export function skillIconUrl(id: number, SKILLS: SkillCatalog): string {
+export function getSkillIconUrl(id: number, SKILLS: SkillCatalog): string {
   const entry = SKILLS[id];
   const iconKey = entry?.iconId ?? id;
   return `/icons/skills/${iconKey}.png`;
 }
 
 /** Public path to a base Uma’s icon (not outfit-specific). */
-export function umaIcon(baseUmaId: string): string {
+export function getUmaIcon(baseUmaId: string): string {
   return `/icons/umas/${baseUmaId}.png`;
 }
 
@@ -163,9 +165,9 @@ export function getUmaVariantById(
   return UMA_VARIANTS.find((v) => v.id === variantId);
 }
 
-/** Optional: turn UMA_VARIANTS into a quick lookup map for O(1) access. */
-export function indexUmaVariants(UMA_VARIANTS: UmaVariant[]): Record<string, UmaVariant> {
-  const map: Record<string, UmaVariant> = {};
-  for (const v of UMA_VARIANTS) map[v.id] = v;
-  return map;
-}
+// /** Optional fancy: turn UMA_VARIANTS into a quick lookup map for O(1) access. */
+// export function indexUmaVariants(UMA_VARIANTS: UmaVariant[]): Record<string, UmaVariant> {
+//   const map: Record<string, UmaVariant> = {};
+//   for (const v of UMA_VARIANTS) map[v.id] = v;
+//   return map;
+//}

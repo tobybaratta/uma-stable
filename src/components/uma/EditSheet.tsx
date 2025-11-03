@@ -18,13 +18,14 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Search, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import ComboAdd from '@/components/uma/ComboAdd';
 
 import type { SkillCatalog, UmaVariant } from '@/lib/types.ui';
 import type { Veteran } from '@/lib/types.db';
+import { cn } from '@/lib/utils';
 
 type SavePayload = {
   id?: string;
@@ -163,36 +164,22 @@ export default function EditSheet({
           {/* Skills (entered as names, stored as IDs) */}
           <div className="grid gap-2">
             <Label>Skills</Label>
-            <div className="flex w-full items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  value={skillInput}
-                  onChange={(e) => setSkillInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addSkill();
-                    }
-                  }}
-                  placeholder="Type a skill name and press Enter"
-                  className="pl-9"
-                  list="skills"
-                />
-                <datalist id="skills">
-                  {Object.values(SKILLS).map((opt) => (
-                    <option key={opt.name} value={opt.name} />
-                  ))}
-                </datalist>
-              </div>
-              <Button onClick={() => addSkill()} type="button" className="gap-2">
-                <Plus className="h-4 w-4" /> Add
-              </Button>
-            </div>
-
+            <ComboAdd
+              options={Object.values(SKILLS).map((s) => ({ id: s.id, label: s.name }))}
+              onAdd={(val) => addSkill(val)}
+              placeholder="Type a skill name, press Enter"
+              addLabel="Add"
+            />
             <div className="flex flex-wrap gap-2">
-              {skillNames.map((s) => (
-                <Badge key={s} variant="secondary" className="rounded-xl group">
+              {skillNames.map((s, i) => (
+                <Badge
+                  key={s + i}
+                  variant="secondary"
+                  className={cn(
+                    'rounded-xl border-0 px-2 py-1 text-xs font-medium text-foreground',
+                    'bg-gradient-to-r from-sky-300/70 to-indigo-400/70 dark:from-sky-700/60 dark:to-indigo-800/60',
+                  )}
+                >
                   {s}
                   <button
                     className="ml-1 rounded-full hover:bg-foreground/10 px-1"
@@ -209,39 +196,21 @@ export default function EditSheet({
 
           {/* Sparks */}
           <div className="grid gap-2">
-            <Label>Sparks</Label>
-            <div className="flex w-full items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  value={sparkInput}
-                  onChange={(e) => setSparkInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addSpark();
-                    }
-                  }}
-                  placeholder="Type a spark name and press Enter"
-                  className="pl-9"
-                  list="sparks"
-                />
-                <datalist id="sparks">
-                  {Object.values(SKILLS).map((opt) => (
-                    <option key={opt.name} value={opt.name} />
-                  ))}
-                </datalist>
-              </div>
-              <Button onClick={() => addSpark()} type="button" className="gap-2">
-                <Plus className="h-4 w-4" /> Add
-              </Button>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {sparkNames.map((s) => (
+            <ComboAdd
+              options={Object.values(SKILLS).map((s) => ({ id: s.id, label: s.name }))}
+              onAdd={(val) => addSpark(val)}
+              placeholder="Type a spark name, press Enter"
+              addLabel="Add"
+            />
+            <div className="flex flex-wrap gap-2 mt-2">
+              {sparkNames.map((s, i) => (
                 <Badge
-                  key={s}
-                  className="rounded-xl bg-gradient-to-r from-amber-200 to-pink-200 text-foreground border-0"
+                  key={s + i}
+                  variant="secondary"
+                  className={cn(
+                    'rounded-xl border-0 px-2 py-1 text-xs font-medium text-foreground',
+                    'bg-gradient-to-r from-amber-200 to-pink-200 dark:from-amber-700/60 dark:to-pink-700/60',
+                  )}
                 >
                   {s}
                   <button

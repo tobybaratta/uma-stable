@@ -1,4 +1,4 @@
-import { Plus, Search, Sparkles } from 'lucide-react';
+import { HouseHeart, Plus, Search } from 'lucide-react';
 import ThemeToggle from '@/components/common/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,7 @@ export default function Header({
       <div className="mx-auto max-w-6xl px-4 py-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-pink-400 to-amber-300 shadow-md grid place-items-center">
-            <Sparkles className="h-5 w-5 text-white" />
+            <HouseHeart className="h-5 w-5 text-white" />
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">
             <span className="bg-gradient-to-b from-pink-500 to-amber-400 bg-clip-text text-transparent drop-shadow-sm">
@@ -48,7 +48,7 @@ export default function Header({
         <img
           src="/seiun-sky-chibi.png"
           alt="Seiun Sky chibi"
-          className="pointer-events-none select-none hidden sm:block absolute -right-4 -bottom-6 w-28 drop-shadow-[0_6px_0_rgba(255,255,255,0.9)]"
+          className="pointer-events-none select-none hidden sm:block absolute -right-4 -bottom-6 w-20 drop-shadow-[0_6px_0_rgba(255,255,255,0.9)]"
         />
       </div>
     </header>

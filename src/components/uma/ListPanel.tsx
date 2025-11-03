@@ -1,4 +1,3 @@
-// src/components/uma/ListPanel.tsx
 import { Sparkles, NotebookPen, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,10 +8,17 @@ import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { useState } from 'react';
-import { skillName } from '@/lib/catalog';
+import { getSkillNameById } from '@/lib/catalog';
 
 import type { SkillCatalog } from '@/lib/types.ui';
 import type { Veteran } from '@/lib/types.db';
+
+// Simple badge style helpers
+const badgeBase = 'rounded-xl px-2 py-0.5 text-xs font-medium border-0 text-black dark:text-white';
+
+const badgeSkill = `${badgeBase} bg-gradient-to-r from-sky-300/70 to-indigo-400/70 dark:from-sky-700/60 dark:to-indigo-800/60`;
+
+const badgeSpark = `${badgeBase} bg-gradient-to-r from-amber-200 to-pink-200 dark:from-amber-700/60 dark:to-pink-700/60`;
 
 export default function ListPanel({
   entries,
@@ -37,7 +43,7 @@ export default function ListPanel({
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="text-xl">Your Trainees</CardTitle>
-            <CardDescription>These are loaded in from local memory and will not be saved on refresh. That's TBD.</CardDescription>
+            <CardDescription>This doesn't...not work! Sorta? Yay.</CardDescription>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -123,12 +129,12 @@ export default function ListPanel({
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {e.skills.slice(0, 5).map((id, i) => (
-                  <Badge key={i} variant="secondary" className="rounded-xl">
-                    {skillName(id, SKILLS)}
+                  <Badge key={i} className={badgeSkill}>
+                    {getSkillNameById(id, SKILLS)}
                   </Badge>
                 ))}
                 {e.skills.length > 5 && (
-                  <Badge variant="outline" className="rounded-xl">
+                  <Badge variant="outline" className={badgeSkill}>
                     +{e.skills.length - 5} more
                   </Badge>
                 )}
@@ -140,11 +146,8 @@ export default function ListPanel({
                 ) : null}
 
                 {e.sparks.map((id, i) => (
-                  <Badge
-                    key={i}
-                    className="rounded-xl bg-gradient-to-r from-amber-200 to-pink-200 border-0"
-                  >
-                    {skillName(id, SKILLS)}
+                  <Badge key={i} className={badgeSpark}>
+                    {getSkillNameById(id, SKILLS)}
                   </Badge>
                 ))}
               </div>

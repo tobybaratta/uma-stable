@@ -2,7 +2,7 @@
 // Name/ID conversion helpers for skills — UI-side.
 
 import type { SkillCatalog } from './types.ui';
-import { skillName } from './catalog';
+import { getSkillNameById } from './catalog';
 
 function buildNameToId(SKILLS: SkillCatalog): Map<string, number> {
   const map = new Map<string, number>();
@@ -32,5 +32,5 @@ export function namesToIds(names: string[], SKILLS: SkillCatalog): number[] {
 }
 
 export function idsToNames(ids: number[], SKILLS: SkillCatalog): string[] {
-  return ids.map((id) => skillName(id, SKILLS));
+  return ids.map((id) => getSkillNameById(id, SKILLS));
 }
