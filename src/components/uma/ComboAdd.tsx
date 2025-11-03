@@ -1,4 +1,3 @@
-// src/components/uma/ComboAdd.tsx
 import * as React from 'react';
 import { Check, ChevronsUpDown, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,16 +15,12 @@ import {
 type Option = { id: string | number; label: string };
 
 type ComboAddProps = {
-  /** full list; we'll filter & limit inside */
   options: Option[];
-  /** called when user commits an item (or free text via Enter/Add) */
   onAdd: (value: string) => void;
   placeholder?: string;
   addLabel?: string;
   className?: string;
   emptyText?: string;
-  /** if true, allow free text (not only from options) */
-  allowFreeText?: boolean;
 };
 
 export default function ComboAdd({
@@ -35,13 +30,12 @@ export default function ComboAdd({
   addLabel = 'Add',
   className,
   emptyText = 'No matches',
-  allowFreeText = true,
 }: ComboAddProps) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
-  const [buttonLabel, setButtonLabel] = React.useState(''); // preview in trigger
+  const [buttonLabel, setButtonLabel] = React.useState('');
 
-  // dedupe by label (case-insensitive), keep first occurrence
+  // dedupe by label (case-insensitive)
   const base = React.useMemo(() => {
     const map = new Map<string, Option>();
     for (const o of options) {
@@ -51,11 +45,15 @@ export default function ComboAdd({
     return Array.from(map.values());
   }, [options]);
 
-  // simple filter (Command also filters, but we pre-limit for perf)
+  const norm = (s: string) => s.trim().toLowerCase();
+  const exactMatch = React.useMemo(
+    () => !!base.find((o) => norm(o.label) === norm(query)),
+    [base, query],
+  );
+
   const filtered = React.useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const arr = q ? base.filter((o) => o.label.toLowerCase().includes(q)) : base;
-    // hard cap to keep DOM small; still searchable
+    const q = norm(query);
+    const arr = q ? base.filter((o) => norm(o.label).includes(q)) : base;
     return arr.slice(0, 200);
   }, [base, query]);
 
@@ -80,9 +78,7 @@ export default function ComboAdd({
             className="w-full justify-between rounded-xl"
             onClick={() => setOpen((p) => !p)}
           >
-            <span className="truncate text-left">
-              {buttonLabel || 'Search & select (or type)…'}
-            </span>
+            <span className="truncate text-left">{buttonLabel || 'Search & select…'}</span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -97,13 +93,6 @@ export default function ComboAdd({
               value={query}
               onValueChange={setQuery}
               placeholder={placeholder}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && allowFreeText) {
-                  // when Enter on free text (no active item)
-                  // Command handles selection when an item is focused
-                  commit(query);
-                }
-              }}
             />
             <CommandList className="max-h-64 overflow-auto">
               <CommandEmpty className="py-6 text-sm text-muted-foreground">
@@ -111,12 +100,12 @@ export default function ComboAdd({
               </CommandEmpty>
               <CommandGroup>
                 {filtered.map((opt, i) => {
-                  const isActive = query.trim().toLowerCase() === opt.label.toLowerCase();
+                  const isActive = norm(query) === norm(opt.label);
                   return (
                     <CommandItem
                       key={`${opt.id}__${i}`}
                       value={opt.label}
-                      onSelect={(val) => commit(val)}
+                      onSelect={(val) => commit(val)} // selecting an item commits
                       className="cursor-pointer"
                     >
                       <Check
@@ -128,12 +117,13 @@ export default function ComboAdd({
                 })}
               </CommandGroup>
             </CommandList>
+
             <CommandSeparator />
             <div className="p-2">
               <Button
                 className="w-full rounded-xl gap-2"
                 onClick={() => commit(query)}
-                disabled={!allowFreeText || !query.trim()}
+                disabled
                 variant="secondary"
               >
                 <Plus className="h-4 w-4" />
