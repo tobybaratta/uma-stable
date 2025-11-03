@@ -9,7 +9,9 @@
     "subcomponents",
     "umalator",
     "umamusume",
-    "umas"
+    "umas",
+    "Seiun",
+    "Chibi"
   ],
   "cSpell.ignorePaths": [
     "package-lock.json",

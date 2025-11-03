@@ -2,11 +2,14 @@
 import { useMemo, useState } from 'react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Header, ListPanel, EditSheet } from '@/components/uma';
-import { uid } from '@/lib/uid';
 import type { Entry } from '@/lib/types';
+
+// Importing this wasn't properly working, so just placing the function here as a temp fix.
+const uid = () => Math.random().toString(36).slice(2, 10);
 
 export default function App() {
   const [query, setQuery] = useState('');
+  // Fix Me to not be a subset of Umas
   const [entries, setEntries] = useState<Entry[]>(() => [
     {
       id: uid(),
