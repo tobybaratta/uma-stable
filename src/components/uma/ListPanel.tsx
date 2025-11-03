@@ -42,8 +42,10 @@ export default function ListPanel({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-xl">Your Trainees</CardTitle>
-            <CardDescription>This doesn't...not work! Sorta? Yay.</CardDescription>
+            <CardTitle className="text-xl">Trainee Veterans</CardTitle>
+            <CardDescription>
+              You can add your veterans here to then lookup and find sparks later.
+            </CardDescription>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
