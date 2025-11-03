@@ -49,28 +49,11 @@ export default function App() {
       setUMA_VARIANTS(UMA_VARIANTS);
 
       // Seed demo entries with the first available variant (if any)
-      const seed: Veteran[] = [];
-      if (UMA_VARIANTS.length) {
-        const v0 = UMA_VARIANTS[0];
-        seed.push({
-          id: uid(),
-          uma: {
-            id: v0.id,
-            baseId: v0.baseId,
-            name: v0.name,
-            label: v0.label,
-            displayName: v0.displayName,
-          },
-          skills: [],
-          sparks: [],
-          createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6h ago
-          favorite: true,
-        });
-      }
+      const seed: Veteran[] = getShittySeededVeterans();
 
       setEntries((prev) => {
         if (prev.length > 0) return prev;
-        return seed ? [seed as any] : [];
+        return seed ? [...seed] : [];
       });
 
       setReady(true);
@@ -175,4 +158,41 @@ export default function App() {
       </div>
     </TooltipProvider>
   );
+}
+
+function getShittySeededVeterans(): Veteran[] {
+  return [
+    {
+      id: 'ofow3dl7',
+      uma: {
+        id: '100901',
+        baseId: '1009',
+        name: 'Daiwa Scarlet',
+        label: '[Peak Blue]',
+        displayName: '[Peak Blue] Daiwa Scarlet',
+      },
+      skills: [10141],
+      sparks: [10111, 200011],
+      notes: "whoa it's daiwa",
+      favorite: false,
+      createdAt: '2025-11-03T06:20:46.776Z',
+    },
+    {
+      id: 'v-maruzensky-hot-summer-night',
+      uma: {
+        id: '100402',
+        baseId: '1004',
+        name: 'Maruzensky',
+        label: '[Hot☆Summer Night]',
+        displayName: '[Hot☆Summer Night] Maruzensky',
+      },
+      skills: [
+        910041, 900201, 200012, 200141, 200152, 200351, 200542, 201242, 201281, 201601, 201611,
+      ],
+      sparks: [201601, 910041, 200142, 200012],
+      notes: 'B+, has groundwork spark. kinda decent',
+      favorite: true,
+      createdAt: '2025-11-03T06:15:08.691Z',
+    },
+  ];
 }
