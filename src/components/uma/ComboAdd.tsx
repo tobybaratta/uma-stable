@@ -46,10 +46,6 @@ export default function ComboAdd({
   }, [options]);
 
   const norm = (s: string) => s.trim().toLowerCase();
-  const exactMatch = React.useMemo(
-    () => !!base.find((o) => norm(o.label) === norm(query)),
-    [base, query],
-  );
 
   const filtered = React.useMemo(() => {
     const q = norm(query);
