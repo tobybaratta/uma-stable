@@ -4,11 +4,7 @@ import type { SkillCatalog, SkillCatalogEntry } from '@/lib/types';
 type NamesJson = Record<string, string[]>;
 type MetaJson = Record<string, Partial<Pick<SkillCatalogEntry, 'iconId' | 'groupId'>>>;
 
-
-export function buildSkillCatalog(
-  skillNames: NamesJson,
-  skillsMeta: MetaJson,
-): SkillCatalog {
+export function buildSkillCatalog(skillNames: NamesJson, skillsMeta: MetaJson): SkillCatalog {
   const catalog: SkillCatalog = {};
 
   // First pass: names
@@ -32,4 +28,3 @@ export function buildSkillCatalog(
 
 // Helpers for URLs based on your folder structure
 export const skillIconUrl = (id: number | string) => `/icons/skills/${id}.png`;
-export const umaIconUrl = (umaId: number | string) => `/icons/umas/${umaId}.png`;
