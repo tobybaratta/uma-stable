@@ -70,9 +70,9 @@ export default function ListPanel({
             >
               <div className="flex items-start justify-between">
                 <div className="min-w-0">
-                  {/* displayName now comes from e.uma.displayName */}
+                  {/* tiny hack */}
                   <h3 className="font-semibold text-lg leading-tight truncate">
-                    {e.uma.displayName}
+                    {e?.uma?.displayName}
                   </h3>
                   <p className="text-xs text-muted-foreground">
                     Added {new Date(e.createdAt).toLocaleDateString()}

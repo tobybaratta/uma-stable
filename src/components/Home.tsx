@@ -89,7 +89,7 @@ export default function App() {
 
     return entries.filter((e) => {
       const haystack: string[] = [
-        e.uma.displayName,
+        e.uma.displayName ?? '',
         e.notes ?? '',
         ...e.skills.map(idToName),
         ...e.sparks.map(idToName),

@@ -46,7 +46,7 @@ export default function Header({
         </div>
 
         <img
-          src="/seiun-sky-chibi.png"
+          src="/uma-stable/seiun-sky-chibi.png"
           alt="Seiun Sky chibi"
           className="pointer-events-none select-none hidden sm:block absolute -right-4 -bottom-6 w-20 drop-shadow-[0_6px_0_rgba(255,255,255,0.9)]"
         />
