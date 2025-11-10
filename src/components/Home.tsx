@@ -8,6 +8,7 @@ import { buildVeteran } from '@/lib/adapters.db';
 
 import type { Veteran } from '@/lib/types.db';
 import type { SkillCatalog, UmaVariant, UmaBase } from '@/lib/types.ui';
+import Examples from './uma/Examples';
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -155,6 +156,7 @@ export default function App() {
           veteran={editing}
           onSubmit={onSaveFromForm}
         />
+        <Examples />
       </div>
     </TooltipProvider>
   );
