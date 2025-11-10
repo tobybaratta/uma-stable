@@ -156,7 +156,6 @@ export default function App() {
           veteran={editing}
           onSubmit={onSaveFromForm}
         />
-        <Examples />
       </div>
     </TooltipProvider>
   );
