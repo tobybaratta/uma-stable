@@ -8,6 +8,7 @@ export default function Examples() {
 
   return (
     <div className="flex justify-center gap-4 p-4">
+      <h1>Examples for Fan Studies Class</h1>
       {images.map((src) => (
         <img
           key={src}
