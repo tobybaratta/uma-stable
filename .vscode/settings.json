@@ -1,9 +1,12 @@
 {
   "cSpell.words": [
     "Baratta",
+    "Chibi",
     "Debuff",
     "Dexie",
+    "Maruzensky",
     "Musume",
+    "Seiun",
     "skilllnames",
     "skillnames",
     "subcomponents",
@@ -19,6 +22,6 @@
     ".git/{index,*refs,*HEAD}",
     ".vscode",
     ".vscode-insiders",
-    "src/data"
+    "public"
   ]
 }
