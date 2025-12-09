@@ -2,7 +2,7 @@ name: Deploy Vite (ui-rewrite) to GitHub Pages
 
 on:
   push:
-    branches: [ui-rewrite]
+    branches: [main]
 
 permissions:
   contents: read
